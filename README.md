@@ -12,7 +12,7 @@ srun --nodes=1 --ntasks-per-node=10 --cpus-per-task=1 --time=03:00:00 --mem=10GB
 module load python3/3.8.3_anaconda2020.07_mamba
 
 cd /home/<group_name>/shared 
-git clone https://github.com/ENCODE-DCC/chip-seq-pipeline2.git
+git clone https://github.com/acherman/chip-seq-pipeline2.git
 cd chip-seq-pipeline2/
 
 # This might take a while!
