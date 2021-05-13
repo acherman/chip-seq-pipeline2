@@ -15,9 +15,9 @@ conda --version
 echo "=== Installing pipeline's Conda environments ==="
 
 if [[ "$1" == mamba ]]; then
-  conda install mamba -y -c conda-forge
-  mamba create -n ${CONDA_ENV_PY3} --file ${REQ_TXT_PY3} -y -c defaults -c r -c bioconda -c conda-forge
-  mamba create -n ${CONDA_ENV_PY2} --file ${REQ_TXT_PY2} -y -c defaults -c r -c bioconda -c conda-forge
+  #conda install mamba -y -c conda-forge
+  mamba create --prefix ${PWD}/${CONDA_ENV_PY3} --file ${REQ_TXT_PY3} -y -c defaults -c r -c bioconda -c conda-forge
+  mamba create --prefix ${PWD}/${CONDA_ENV_PY2} --file ${REQ_TXT_PY2} -y -c defaults -c r -c bioconda -c conda-forge
 else
   echo
   echo "If it takes too long to resolve conflicts, then try with mamba."
@@ -28,13 +28,13 @@ else
   echo "If you get another conflict in the mamba installation step itself "
   echo "Then you may need to clean-install miniconda3 and re-login."
   echo
-  conda create -n ${CONDA_ENV_PY3} --file ${REQ_TXT_PY3} -y -c defaults -c r -c bioconda -c conda-forge
-  conda create -n ${CONDA_ENV_PY2} --file ${REQ_TXT_PY2} -y -c defaults -c r -c bioconda -c conda-forge
+  conda create --prefix ${PWD}/${CONDA_ENV_PY3} --file ${REQ_TXT_PY3} -y -c defaults -c r -c bioconda -c conda-forge
+  conda create --prefix ${PWD}/${CONDA_ENV_PY2} --file ${REQ_TXT_PY2} -y -c defaults -c r -c bioconda -c conda-forge
 fi
 
 echo "=== Configuring for pipeline's Conda environments ==="
-CONDA_PREFIX_PY3=$(conda env list | grep -E "\b${CONDA_ENV_PY3}[[:space:]]" | awk '{if (NF==3) print $3; else print $2}')
-CONDA_PREFIX_PY2=$(conda env list | grep -E "\b${CONDA_ENV_PY2}[[:space:]]" | awk '{if (NF==3) print $3; else print $2}')
+CONDA_PREFIX_PY3=${PWD}/${CONDA_ENV_PY3}
+CONDA_PREFIX_PY2=${PWD}/${CONDA_ENV_PY2}
 
 if [ ! "${CONDA_PREFIX_PY3}" -o ! "${CONDA_PREFIX_PY2}" ];
 then
@@ -87,7 +87,7 @@ echo "unset OLD_R_LIBS" >> ${CONDA_DEACTIVATE_SH}
 
 # hack around the need for both python2 and python3 in the same environment
 cd ${CONDA_BIN}
-ln -s ../../${CONDA_ENV_PY2}/bin/python2
+ln -s ../../${PWD}/${CONDA_ENV_PY2}/bin/python2
 
 echo "=== Updating pipeline's Conda environments ==="
 cd ${CONDA_BIN}
