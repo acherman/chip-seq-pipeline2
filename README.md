@@ -34,6 +34,18 @@ conda activate /home/group/me/software/chip-seq-pipeline2/encode-chip-seq-pipeli
 conda deactivate
 ```
 
+## Dealing with `bowtie2` error
+There seems to be a problem with `tbb` library access in bowtie2. While not exactly the same issue, I believe the solution can be [found here](https://forum.biobakery.org/t/workflow-conda-install-bowtie-2-issue-bowtie2-align-s-error-while-loading-shared-libraries-libtbb-so-2/1831). Essentially, we need to install a particular version of `tbb`.
+
+```
+module load python3/3.8.3_anaconda2020.07_mamba
+
+source activate /home/group/me/software/chip-seq-pipeline2/encode-chip-seq-pipeline
+
+conda install tbb=2020.2
+```
+This should hopefully do the trick!
+
 ## TBD 
 I do not know how this software is actually run! Once this is figured out, I'll add a job script example. If it's easier to run interactively, it's easiest to modify the `srun` command above for more memory, CPUs, and walltime.
 
